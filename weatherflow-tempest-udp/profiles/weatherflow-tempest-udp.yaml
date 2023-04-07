@@ -1,0 +1,9 @@
+name: weatherflow-tempest-udp
+components:
+- id: main
+  label: Current Conditions
+  capabilities:
+  - id: temperatureMeasurement
+    version: 1
+  categories:
+  - name: MultiFunctionalSensor

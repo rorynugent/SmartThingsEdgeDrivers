@@ -1,0 +1,5 @@
+name: 'Weatherflow Tempest UDP'
+packageKey: 'weatherflow-tempest-udp'
+permissions:
+   lan: {}
+   discovery: {}
