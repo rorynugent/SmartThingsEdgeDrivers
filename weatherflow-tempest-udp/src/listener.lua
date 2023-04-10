@@ -16,7 +16,6 @@
 
 --]]
 local cosock = require("cosock")
-local socket = cosock.socket
 
 local json = require "dkjson"
 
@@ -132,21 +131,26 @@ end
 return function(driver)
 
     cosock.spawn(function ()
-        local port = 50222
-        local addr = "0.0.0.0"
-
         log.debug("Starting server thread...")
 
-        local sock = assert(socket.udp())
+        local addr = '0.0.0.0'
+        local port = 50222
+        local sock = cosock.socket:udp()
+
+        log.debug(
+            string.format('Binding socket to %s:%d...',
+            addr,
+            port)
+        )
+
+        assert(sock:setsockname(addr, port))
         sock:settimeout(30)
 
-        local ok, err = sock:setsockname(addr, port)
-        if not ok then
-            log.error("Failed to bind server: " .. err)
-            return
-        end
-
-        log.info("Server running on 0.0.0.0 and listening on port 50222")
+        log.info(
+            string.format('Server running on %s:%d',
+            addr,
+            port)
+        )
 
         repeat
             local data, ip, port = sock:receivefrom(1024)
